@@ -96,20 +96,22 @@ function renderTargets(targets) {
   return count;
 }
 
+let _lastClearedEntry = null;
+
 async function refresh() {
   let settings = DEFAULTS;
   let log = [];
+
+  // fetch settings and log independently — one failing should not kill the other
   try {
-    const [settingsRes, logRes] = await Promise.all([
-      withTimeout(chrome.runtime.sendMessage({ type: "cos:get-settings" }), SW_TIMEOUT_MS),
-      withTimeout(chrome.runtime.sendMessage({ type: "cos:get-log" }), SW_TIMEOUT_MS)
-    ]);
-    if (settingsRes?.ok) settings = settingsRes.settings;
-    if (logRes?.ok) log = logRes.log || [];
-  } catch (e) {
-    // service worker may be cold or slow to wake — keep DEFAULTS so the UI
-    // is still readable instead of showing a blank target list.
-  }
+    const r = await withTimeout(chrome.runtime.sendMessage({ type: "cos:get-settings" }), SW_TIMEOUT_MS);
+    if (r?.ok) settings = r.settings;
+  } catch (_) { /* keep DEFAULTS */ }
+
+  try {
+    const r = await withTimeout(chrome.runtime.sendMessage({ type: "cos:get-log" }), SW_TIMEOUT_MS);
+    if (r?.ok) log = r.log || [];
+  } catch (_) { /* keep [] */ }
 
   setMode(settings.mode);
   const count = renderTargets(settings.targets);
@@ -118,7 +120,8 @@ async function refresh() {
   $("notify-state").textContent = settings.notify ? "on" : "off";
   applyTheme(settings.theme || "auto");
 
-  const last = log[0];
+  // prefer live log, fall back to cached broadcast entry
+  const last = log[0] || _lastClearedEntry;
   $("last-cleared").textContent = last ? fmtTime(last.startedAt || last.at) : "—";
 }
 
@@ -179,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
   chrome.runtime.onMessage.addListener((msg) => {
     if (msg?.type === "cos:cleared") {
       const last = msg.entry;
+      _lastClearedEntry = last;
       $("last-cleared").textContent = fmtTime(last.startedAt);
       const n = last.items?.length || 0;
       flash(`Cleared ${n} ${n === 1 ? "category" : "categories"}.`, "ok");
