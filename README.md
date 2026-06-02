@@ -27,6 +27,12 @@ Four categories, all essential, nothing more:
 - **Native notifications** — off by default, opt in if you want a desktop ping after each wipe.
 - **Zero data exfiltration** — no remote endpoints, no analytics, no sync.
 
+## Screenshots
+<img width="319" height="459" alt="image" src="https://github.com/user-attachments/assets/e77dd144-4424-456f-a465-2dd201d8b085" />
+<img width="1346" height="646" alt="image" src="https://github.com/user-attachments/assets/896d9c5e-3b79-494b-9e22-908b161da350" />
+<img width="1352" height="635" alt="image" src="https://github.com/user-attachments/assets/b6abad34-3194-46ff-96cb-e8d318054b23" />
+
+
 ## Installation
 
 1. Download or clone this repository.
