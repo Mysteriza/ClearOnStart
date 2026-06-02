@@ -1,0 +1,511 @@
+/* ClearOnStart — shared design tokens & primitives
+   Aesthetic: classified document / privacy manifest.
+   Warm paper, ink black, stamp red, no glass, no gradients. */
+
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-mono-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-mono-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-mono-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-serif-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-serif-400i.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Serif";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-serif-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Serif";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/ibm-plex-serif-600.woff2") format("woff2");
+}
+
+:root {
+  --paper:        #f4efe5;
+  --paper-dim:    #ebe5d6;
+  --paper-soft:   #f9f5eb;
+  --paper-edge:   #d9d1bf;
+  --ink:          #1c1814;
+  --ink-soft:     #4a4239;
+  --ink-mute:     #6a6056;
+  --ink-faint:    #a59c8e;
+  --rule:         #1c1814;
+  --rule-faint:   #c8bfa9;
+  --stamp:        #a8362b;
+  --stamp-soft:   #c4524a;
+  --stamp-bg:     #f1d6cf;
+  --safe:         #3a5d3f;
+  --safe-soft:    #c6d3c0;
+  --warn:         #8a6a1c;
+  --warn-soft:    #e8d8a5;
+  --grid:         rgba(28, 24, 20, 0.04);
+
+  --font-mono:    "Plex Mono", "Cascadia Mono", "JetBrains Mono", "Consolas", "Courier New", monospace;
+  --font-serif:   "Plex Serif", "Source Serif Pro", "Iowan Old Style", "Cambria", "Georgia", "Times New Roman", serif;
+
+  --rad-0: 0;
+  --pad-xs: 4px;
+  --pad-sm: 8px;
+  --pad-md: 14px;
+  --pad-lg: 22px;
+  --pad-xl: 34px;
+}
+
+/* ---------- Dark mode ----------
+   Strategy:
+     1. Default :root carries the light tokens above.
+     2. System dark is honoured only when the user has not
+        forced light (data-theme="light" excludes the override).
+     3. Manual dark (data-theme="dark") wins regardless of system. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:        #1c1814;
+    --paper-dim:    #221d1a;
+    --paper-soft:   #2a2420;
+    --paper-edge:   #3a322c;
+    --ink:          #ede4d0;
+    --ink-soft:     #c8bfa9;
+    --ink-mute:     #908578;
+    --ink-faint:    #5a5249;
+    --rule:         #ede4d0;
+    --rule-faint:   #3a322c;
+    --stamp:        #d65a4a;
+    --stamp-soft:   #e07565;
+    --stamp-bg:     #3a201c;
+    --safe:         #6a8d6f;
+    --safe-soft:    #2a3528;
+    --warn:         #c8a05c;
+    --warn-soft:    #3a2f1c;
+    --grid:         rgba(237, 228, 208, 0.04);
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper:        #1c1814;
+  --paper-dim:    #221d1a;
+  --paper-soft:   #2a2420;
+  --paper-edge:   #3a322c;
+  --ink:          #ede4d0;
+  --ink-soft:     #c8bfa9;
+  --ink-mute:     #908578;
+  --ink-faint:    #5a5249;
+  --rule:         #ede4d0;
+  --rule-faint:   #3a322c;
+  --stamp:        #d65a4a;
+  --stamp-soft:   #e07565;
+  --stamp-bg:     #3a201c;
+  --safe:         #6a8d6f;
+  --safe-soft:    #2a3528;
+  --warn:         #c8a05c;
+  --warn-soft:    #3a2f1c;
+  --grid:         rgba(237, 228, 208, 0.04);
+}
+
+:root[data-theme="light"] {
+  /* explicit light — reassert light tokens so a user choice
+     overrides a system dark preference. */
+  --paper:        #f4efe5;
+  --paper-dim:    #ebe5d6;
+  --paper-soft:   #f9f5eb;
+  --paper-edge:   #d9d1bf;
+  --ink:          #1c1814;
+  --ink-soft:     #4a4239;
+  --ink-mute:     #6a6056;
+  --ink-faint:    #a59c8e;
+  --rule:         #1c1814;
+  --rule-faint:   #c8bfa9;
+  --stamp:        #a8362b;
+  --stamp-soft:   #c4524a;
+  --stamp-bg:     #f1d6cf;
+  --safe:         #3a5d3f;
+  --safe-soft:    #c6d3c0;
+  --warn:         #8a6a1c;
+  --warn-soft:    #e8d8a5;
+  --grid:         rgba(28, 24, 20, 0.04);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+a:hover { color: var(--stamp); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+h1 { font-size: 18px; letter-spacing: 0.08em; }
+h2 { font-size: 13px; letter-spacing: 0.12em; color: var(--ink-soft); }
+h3 { font-size: 11px; letter-spacing: 0.16em; color: var(--ink-mute); }
+
+p { margin: 0 0 8px 0; }
+
+code, .mono { font-family: var(--font-mono); }
+
+::selection { background: var(--stamp-bg); color: var(--ink); }
+
+hr.rule {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+hr.rule--faint { border-top-color: var(--rule-faint); }
+
+/* ---------- Stamps / badges ---------- */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1.5px solid currentColor;
+  color: var(--ink);
+  background: transparent;
+  line-height: 1.5;
+}
+.stamp--ink   { color: var(--ink); }
+.stamp--red   { color: var(--stamp); border-color: var(--stamp); background: var(--stamp-bg); }
+.stamp--safe  { color: var(--safe); border-color: var(--safe); background: var(--safe-soft); }
+.stamp--warn  { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); }
+.stamp--ghost { color: var(--ink-mute); border-color: var(--ink-faint); background: transparent; }
+
+/* ---------- Row (the workhorse layout) ----------
+   Two-column: label / control, with a hint line that can
+   sit under the label. Used everywhere a control needs
+   to align in a stack. */
+.row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--rule-faint);
+  background: var(--paper);
+}
+.row:last-child { border-bottom: 0; }
+.row--stack {
+  display: block;
+}
+.row--stack .row__label { margin-bottom: 8px; }
+
+.row__label { min-width: 0; }
+.row__title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink);
+}
+.row__hint {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.row__code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 4px;
+}
+
+.row--full {
+  grid-template-columns: 1fr;
+}
+
+/* ---------- Checkbox (custom) ----------
+   Two equivalent structures are supported:
+     1) <label class="check"><input ...><span class="check__box"></span>label text</label>
+     2) <label class="row__title"><input class="check__input"><span class="check__box"></span>label text</label>
+   Both rely on the input + .check__box being adjacent siblings. */
+.check,
+.row__title {
+  cursor: pointer;
+  user-select: none;
+}
+.check input,
+.check__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+.check__box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: background 80ms linear;
+}
+.check__box::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  background: var(--ink);
+  transform: scale(0);
+  transition: transform 90ms cubic-bezier(0.7, 0, 0.3, 1);
+}
+.check input:checked + .check__box,
+.check__input:checked + .check__box { background: var(--paper-soft); }
+.check input:checked + .check__box::after,
+.check__input:checked + .check__box::after { transform: scale(1); }
+.check input:focus-visible + .check__box,
+.check__input:focus-visible + .check__box {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+}
+.check input:disabled + .check__box,
+.check__input:disabled + .check__box { border-color: var(--ink-faint); background: var(--paper-dim); }
+.check input:disabled + .check__box::after,
+.check__input:disabled + .check__box::after { background: var(--ink-faint); }
+
+/* A check row that places the box inline with the title. */
+.check--row {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  padding: 4px 0 4px 0;
+}
+.check--row .row__title { padding-top: 0; }
+
+/* When .check--row is used on an element that is also a .row
+   (grid two-column layout), keep the grid display instead of
+   the inline-flex from .check--row. */
+.row.check--row { display: grid; }
+
+/* ---------- Radio "ledger" button group ---------- */
+.ledger {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.ledger__btn {
+  position: relative;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 9px 10px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--ink);
+  transition: background 80ms linear, color 80ms linear;
+  white-space: nowrap;
+}
+.ledger__btn:last-child { border-right: 0; }
+.ledger__btn:hover { background: var(--paper-dim); }
+.ledger__btn[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---------- Button ---------- */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 60ms ease, background 80ms linear;
+}
+.btn:hover { background: var(--paper-dim); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--stamp); outline-offset: 2px; }
+
+.btn--ink    { background: var(--ink); color: var(--paper); }
+.btn--ink:hover { background: #2a241d; }
+.btn--stamp  { background: var(--stamp); color: var(--paper-soft); border-color: var(--stamp); }
+.btn--stamp:hover { background: var(--stamp-soft); }
+.btn--ghost  { background: transparent; }
+.btn--sm     { padding: 6px 10px; font-size: 10px; }
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Section ---------- */
+.section {
+  border-top: 1.5px solid var(--rule);
+  padding: 18px 0 6px;
+  background: var(--paper);
+  position: relative;
+}
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 20px 12px;
+}
+.section__num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+.section__title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---------- Definition list (used in popup status) ---------- */
+.dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 18px;
+  row-gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.dl dt {
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+  align-self: center;
+}
+.dl dd { margin: 0; color: var(--ink); }
+
+/* ---------- Inline code-ish tags ---------- */
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: var(--paper-dim);
+  border: 1px solid var(--rule-faint);
+  padding: 1px 5px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Status dot (used for live mode indicator) ---------- */
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-mute);
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.dot--on   { background: var(--safe); box-shadow: 0 0 0 2px var(--safe-soft); }
+.dot--off  { background: var(--ink-faint); }
+.dot--err  { background: var(--stamp); box-shadow: 0 0 0 2px var(--stamp-bg); }
+
+/* ---------- Decorative folio number (corner mark) ---------- */
+.folio {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 4px 8px;
+  border-left: 1px solid var(--rule-faint);
+  border-bottom: 1px solid var(--rule-faint);
+  background: var(--paper-soft);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

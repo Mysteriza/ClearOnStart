@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ClearOnStart — Privacy Manifest</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("cos-theme");
+        if (t === "dark" || t === "light") {
+          document.documentElement.dataset.theme = t;
+        } else {
+          delete document.documentElement.dataset.theme;
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body class="page">
+  <div class="page__sheet">
+
+    <header class="masthead">
+      <div class="masthead__row">
+        <div class="masthead__brand">
+          <span class="masthead__mark">COS</span>
+          <div>
+            <p class="masthead__eyebrow">Document № 01 &middot; Privacy Manifest</p>
+            <h1 class="masthead__title">ClearOn<span class="masthead__amp">/</span>Start</h1>
+          </div>
+        </div>
+        <div class="masthead__meta">
+          <span class="stamp stamp--safe" id="status-stamp">
+            <span class="dot dot--on"></span><span id="status-label">Armed</span>
+          </span>
+        </div>
+      </div>
+      <p class="masthead__lede">
+        A small utility that scrubs <em>browsing history, cached images,
+        download records, and autofill entries</em> the moment Chrome
+        opens. No data is sent anywhere.
+      </p>
+    </header>
+
+    <main class="manifest">
+
+      <!-- § 01 — OPERATION -->
+      <section class="section" id="section-operation">
+        <header class="section__head">
+          <p class="section__num">§ 01 — Operation</p>
+          <span class="mono" id="dirty-flag" hidden>● unsaved</span>
+        </header>
+
+        <div class="row">
+          <div class="row__label">
+            <span class="row__title">When</span>
+            <span class="row__hint">When the wipe runs.</span>
+          </div>
+          <div class="ledger" role="radiogroup" aria-label="When the wipe runs">
+            <button class="ledger__btn" data-mode="onStart" type="button" role="radio">On start</button>
+            <button class="ledger__btn" data-mode="off"     type="button" role="radio">Paused</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row__label">
+            <span class="row__title">Range</span>
+            <span class="row__hint">How far back to look when wiping.</span>
+          </div>
+          <div class="ledger" role="radiogroup" aria-label="Time range">
+            <button class="ledger__btn" data-range="0"    type="button" role="radio">Forever</button>
+            <button class="ledger__btn" data-range="week" type="button" role="radio">Past week</button>
+            <button class="ledger__btn" data-range="day"  type="button" role="radio">Past day</button>
+            <button class="ledger__btn" data-range="hour" type="button" role="radio">Past hour</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row__label">
+            <span class="row__title">Theme</span>
+            <span class="row__hint">Paper or ink. <em>Auto</em> follows your system.</span>
+          </div>
+          <div class="ledger" role="radiogroup" aria-label="Theme">
+            <button class="ledger__btn" data-theme="auto"  type="button" role="radio">Auto</button>
+            <button class="ledger__btn" data-theme="light" type="button" role="radio">Light</button>
+            <button class="ledger__btn" data-theme="dark"  type="button" role="radio">Dark</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row__label">
+            <span class="row__title">Notify</span>
+            <span class="row__hint">Show a desktop notification after each wipe. <em>Off by default.</em></span>
+          </div>
+          <label class="check check--row">
+            <input id="opt-notify" type="checkbox" class="check__input" data-target="__notify" />
+            <span class="check__box"></span>
+            <span class="row__title">Show notification</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- § 02 — TARGETS -->
+      <section class="section" id="section-targets">
+        <header class="section__head">
+          <p class="section__num">§ 02 — Targets</p>
+          <span class="mono" id="targets-counter">0 / 4 armed</span>
+        </header>
+
+        <label class="row check">
+          <span class="row__label">
+            <input type="checkbox" class="check__input" data-target="history" checked />
+            <span class="check__box"></span>
+            <span class="row__title">Browsing history</span>
+            <span class="row__hint">URLs, titles, visit timestamps.</span>
+          </span>
+          <span class="kbd">essential</span>
+        </label>
+
+        <label class="row check">
+          <span class="row__label">
+            <input type="checkbox" class="check__input" data-target="cache" checked />
+            <span class="check__box"></span>
+            <span class="row__title">Cached images &amp; files</span>
+            <span class="row__hint">Local copies of pages and assets.</span>
+          </span>
+          <span class="kbd">essential</span>
+        </label>
+
+        <label class="row check">
+          <span class="row__label">
+            <input type="checkbox" class="check__input" data-target="downloads" checked />
+            <span class="check__box"></span>
+            <span class="row__title">Download history</span>
+            <span class="row__hint">The list of files you’ve downloaded. Files on disk stay.</span>
+          </span>
+          <span class="kbd">essential</span>
+        </label>
+
+        <label class="row check">
+          <span class="row__label">
+            <input type="checkbox" class="check__input" data-target="formData" checked />
+            <span class="check__box"></span>
+            <span class="row__title">Autofill form data</span>
+            <span class="row__hint">Addresses and form suggestions Chrome offers.</span>
+          </span>
+          <span class="kbd">essential</span>
+        </label>
+      </section>
+
+      <!-- § 03 — ACTIVITY -->
+      <section class="section" id="section-log">
+        <header class="section__head">
+          <p class="section__num">§ 03 — Activity</p>
+          <button class="btn btn--ghost btn--sm" id="clear-log" type="button">Clear log</button>
+        </header>
+
+        <div class="log" id="log-table" role="table" aria-label="Activity log">
+          <div class="log__row log__row--head" role="row">
+            <span role="columnheader">When</span>
+            <span role="columnheader">Trigger</span>
+            <span role="columnheader">Status</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="colophon">
+      <p class="colophon__line mono">ClearOnStart v1.1.2 &middot; single-purpose, no tracking.</p>
+      <div class="colophon__actions">
+        <button class="btn btn--ink"   id="save-btn"   type="button" disabled>Save</button>
+        <button class="btn btn--stamp" id="clear-now"  type="button">Clear now</button>
+      </div>
+    </footer>
+
+    <p class="save-flash" id="save-flash" hidden></p>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

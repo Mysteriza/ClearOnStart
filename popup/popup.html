@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ClearOnStart</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("cos-theme");
+        if (t === "dark" || t === "light") {
+          document.documentElement.dataset.theme = t;
+        } else {
+          delete document.documentElement.dataset.theme;
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body class="popup-body">
+  <main class="popup">
+    <header class="popup__head">
+      <div class="popup__brand">
+        <span class="popup__mark">COS</span>
+        <h1 class="popup__name">ClearOnStart</h1>
+      </div>
+      <button class="stamp popup__mode" id="mode-stamp" data-mode="onStart" type="button" title="Toggle armed / paused">
+        <span class="dot dot--on" id="mode-dot"></span><span id="mode-label">Armed</span>
+      </button>
+    </header>
+
+    <section class="popup__lead">
+      <p class="popup__lead-text" id="lead-text" data-empty="false">
+        <span id="lead-prefix">Will clear</span>
+        <strong id="targets-count">4</strong>
+        <span id="targets-noun">categories</span>
+        <span id="lead-suffix">next time Chrome opens.</span>
+      </p>
+      <button class="btn btn--stamp popup__primary" id="clear-now" type="button">
+        Clear now
+      </button>
+    </section>
+
+    <section class="popup__targets" aria-label="Armed targets">
+      <ul class="popup__target-list" id="target-list"></ul>
+    </section>
+
+    <section class="popup__meta">
+      <dl class="dl popup__dl">
+        <dt>Last cleared</dt>
+        <dd id="last-cleared">—</dd>
+        <dt>Range</dt>
+        <dd id="range-label">Forever</dd>
+        <dt>Notify</dt>
+        <dd id="notify-state">off</dd>
+      </dl>
+    </section>
+
+    <footer class="popup__foot">
+      <button class="popup__link" id="open-options" type="button">Settings</button>
+      <span class="popup__version mono">v1.1.2</span>
+    </footer>
+
+    <p class="popup__note" id="popup-note" hidden></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

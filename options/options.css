@@ -1,0 +1,277 @@
+/* Options page — privacy manifest, simpler than before.
+   Single sheet, three sections, flat rows. */
+
+body.page {
+  background: var(--paper);
+  min-height: 100vh;
+}
+
+.page__sheet {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 28px 80px;
+  background: var(--paper);
+  position: relative;
+}
+
+/* ---------- Masthead ---------- */
+.masthead {
+  border-top: 4px double var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding: 22px 0 22px;
+  position: relative;
+}
+.masthead::before, .masthead::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--ink);
+}
+.masthead::before { top: 8px; }
+.masthead::after  { bottom: -6px; }
+
+.masthead__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.masthead__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.masthead__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  border: 1.5px solid var(--ink);
+  position: relative;
+  flex-shrink: 0;
+}
+.masthead__mark::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--paper);
+  pointer-events: none;
+}
+
+.masthead__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 4px;
+}
+
+.masthead__title {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin: 0;
+}
+.masthead__amp {
+  color: var(--stamp);
+  font-weight: 400;
+  margin: 0 1px;
+}
+
+.masthead__lede {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 20px 0 0;
+  max-width: 60ch;
+  line-height: 1.55;
+}
+.masthead__lede em { font-style: italic; color: var(--ink); }
+
+/* ---------- Status stamp (in masthead) ---------- */
+#status-stamp { font-size: 10px; }
+#status-stamp[data-mode="onStart"] { color: var(--safe); border-color: var(--safe); background: var(--safe-soft); }
+#status-stamp[data-mode="off"]     { color: var(--ink-mute); border-color: var(--ink-faint); background: transparent; }
+#status-stamp[data-mode="onStart"] .dot { background: var(--safe); box-shadow: 0 0 0 2px var(--safe-soft); }
+#status-stamp[data-mode="off"] .dot     { background: var(--ink-faint); box-shadow: none; }
+
+/* ---------- Sections ---------- */
+.manifest { margin-top: 26px; }
+
+.section {
+  border: 1px solid var(--ink);
+  margin-bottom: 22px;
+  background: var(--paper);
+  position: relative;
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 0;
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.section__num {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+
+#dirty-flag {
+  color: var(--stamp);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* The check--row pattern places a real <input> inside .row__label.
+   We need to keep the visual checkbox aligned, and the entire
+   <label> row must be clickable. */
+.row.check {
+  position: relative;
+}
+.row.check .row__label {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  column-gap: 12px;
+  min-width: 0;
+}
+.row.check .row__label > .row__title,
+.row.check .row__label > .row__hint {
+  grid-column: 2;
+}
+.row.check .row__label > .check__box {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin-top: 1px;
+}
+.row.check .row__label > input {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 18px; height: 18px;
+  z-index: 1;
+}
+
+/* Make the kbd chip on the right sit at the title baseline. */
+.row .kbd {
+  align-self: center;
+}
+
+/* ---------- Log table ---------- */
+.log {
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.log__row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr;
+  gap: 12px;
+  padding: 9px 20px;
+  border-top: 1px solid var(--rule-faint);
+  align-items: center;
+}
+.log__row--head {
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-top: 0;
+  padding: 6px 20px;
+}
+.log__row--empty {
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--font-serif);
+  display: block;
+  padding: 22px 20px;
+  text-align: center;
+  font-size: 13px;
+  border-top: 1px solid var(--rule-faint);
+}
+.log__row .stamp { font-size: 9px; padding: 1px 6px; }
+.log__cell-trig { color: var(--ink); }
+.log__cell-trig small { display: block; color: var(--ink-mute); font-size: 9px; margin-top: 1px; }
+
+/* ---------- Colophon ---------- */
+.colophon {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+  flex-wrap: wrap;
+}
+.colophon__line {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.colophon__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.save-flash {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border: 1.5px solid var(--ink);
+  margin: 0;
+}
+.save-flash[data-tone="ok"]   { background: var(--safe);  border-color: var(--safe);  }
+.save-flash[data-tone="err"]  { background: var(--stamp); border-color: var(--stamp); }
+.save-flash[data-tone="warn"] { background: var(--warn);  border-color: var(--warn);  color: var(--paper); }
+
+.btn[data-dirty="true"] {
+  background: var(--stamp);
+  color: var(--paper);
+  border-color: var(--stamp);
+  animation: dirty-pulse 1.6s ease-in-out infinite;
+}
+.btn[data-dirty="true"]:hover { background: var(--stamp-soft); border-color: var(--stamp-soft); }
+@keyframes dirty-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--stamp-bg); }
+  50%      { box-shadow: 0 0 0 4px transparent; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .page__sheet { padding: 32px 18px 64px; }
+  .masthead__title { font-size: 24px; }
+  .masthead__row { flex-direction: column; align-items: flex-start; }
+  .row { grid-template-columns: 1fr; gap: 10px; }
+  .row .kbd { justify-self: start; }
+  .log__row { grid-template-columns: 1.4fr 1fr; }
+  .log__row > :nth-child(3) { display: none; }
+  .colophon { flex-direction: column; align-items: flex-start; }
+}
