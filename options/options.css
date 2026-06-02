@@ -210,8 +210,9 @@ body.page {
   border-top: 1px solid var(--rule-faint);
 }
 .log__row .stamp { font-size: 9px; padding: 1px 6px; }
-.log__cell-trig { color: var(--ink); }
+.log__cell-when small,
 .log__cell-trig small { display: block; color: var(--ink-mute); font-size: 9px; margin-top: 1px; }
+.log__cell-trig { color: var(--ink); }
 
 /* ---------- Colophon ---------- */
 .colophon {

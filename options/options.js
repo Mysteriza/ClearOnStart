@@ -113,6 +113,7 @@ function renderLog(log) {
     row.setAttribute("role", "row");
 
     const when = document.createElement("span");
+    when.className = "log__cell-when";
     when.innerHTML = `${escapeHtml(fmtTime(entry.startedAt || entry.at))}<small>${escapeHtml(fmtDelta(entry.startedAt || entry.at))}</small>`;
 
     const trig = document.createElement("span");
@@ -259,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   $("clear-log").addEventListener("click", async () => {
+    if (!confirm("Clear all activity log? This cannot be undone.")) return;
     await chrome.runtime.sendMessage({ type: "cos:clear-log" });
     renderLog([]);
     flash("Log cleared.", "ok");
