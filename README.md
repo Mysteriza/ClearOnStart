@@ -35,13 +35,50 @@ Four categories, all essential, nothing more:
 
 ## Installation
 
-1. Download or clone this repository.
-2. Open `chrome://extensions`.
-3. Enable **Developer mode** (top right).
-4. Click **Load unpacked** and select this folder.
-5. Pin ClearOnStart to the toolbar (optional but recommended).
+### Step 1 — Download the extension files
+
+You need the extension files on your computer. Choose one method:
+
+**Option A — Download ZIP (easiest)**
+1. Download the extension: [Download ZIP](https://github.com/Mysteriza/ClearOnStart/archive/refs/heads/main.zip).
+3. Find the downloaded `.zip` file (usually in your **Downloads** folder).
+4. **Right-click** the file → **Extract All...** → click **Extract**.
+5. A new folder will appear — keep this folder, you'll need it in Step 3.
+
+### Step 2 — Open Chrome Extensions page
+
+1. Open **Google Chrome**.
+2. In the address bar at the top, type `chrome://extensions` and press **Enter**.
+3. You'll see the Extensions management page.
+
+### Step 3 — Enable Developer mode
+
+1. Look at the **top-right corner** of the Extensions page.
+2. Find the toggle labeled **Developer mode**.
+3. Click it to turn it **ON** (the toggle should turn blue).
+
+### Step 4 — Load the extension
+
+1. After enabling Developer mode, new buttons appear at the top-left.
+2. Click the **Load unpacked** button.
+3. A file browser window opens. Navigate to the folder you extracted/downloaded in **Step 1**.
+4. Select the folder (the one containing `manifest.json`), then click **Select Folder**.
+
+### Step 5 — Pin to toolbar (optional, recommended)
+
+1. The **ClearOnStart** card now appears on the Extensions page.
+2. Look for the **puzzle piece icon** (🧩) in Chrome's top-right toolbar.
+3. Click it → find **ClearOnStart** → click the **pin icon** (📌) next to it.
+4. The ClearOnStart icon now stays visible in your toolbar.
+
+---
 
 The extension icon appears in the toolbar. Click it to open the popup, or right-click for the menu.
+
+### Troubleshooting
+
+- **"Failed to load extension"** — Make sure you selected the correct folder (the one that contains `manifest.json`).
+- **Want to remove it?** — Go to `chrome://extensions`, find ClearOnStart, and click **Remove**.
 
 ## How it works
 
