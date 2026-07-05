@@ -214,6 +214,26 @@ body.page {
 .log__cell-trig small { display: block; color: var(--ink-mute); font-size: 9px; margin-top: 1px; }
 .log__cell-trig { color: var(--ink); }
 
+/* ---------- Log pagination ---------- */
+.log__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--rule-faint);
+}
+.log__page-info {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-mute);
+  min-width: 100px;
+  text-align: center;
+}
+.log__page-btn {
+  min-width: 68px;
+}
+
 /* ---------- Colophon ---------- */
 .colophon {
   margin-top: 32px;
@@ -274,5 +294,7 @@ body.page {
   .row .kbd { justify-self: start; }
   .log__row { grid-template-columns: 1.4fr 1fr; }
   .log__row > :nth-child(3) { display: none; }
+  .log__pagination { gap: 8px; padding: 8px 14px; }
+  .log__page-btn { min-width: 56px; font-size: 9px; padding: 5px 8px; }
   .colophon { flex-direction: column; align-items: flex-start; }
 }

@@ -22,7 +22,7 @@ Four categories, all essential, nothing more:
 - **Time range** — last hour, day, week, month, or forever.
 - **Per-category toggle** — disable any of the four in settings.
 - **Manual save** — changes in the settings page stay unsaved until you press `Save`. A pulsing red `Save ●` button and a browser warning on close keep you from losing work.
-- **Activity log** — last 25 wipes with timestamp, trigger, and result.
+- **Activity log** — last 30 wipes with timestamp, trigger, and result.
 - **Dark mode** — follows the system, with a manual override.
 - **Native notifications** — off by default, opt in if you want a desktop ping after each wipe.
 - **Zero data exfiltration** — no remote endpoints, no analytics, no sync.
@@ -40,7 +40,8 @@ Four categories, all essential, nothing more:
 You need the extension files on your computer. Choose one method:
 
 **Option A — Download ZIP (easiest)**
-1. Download the extension: [Download ZIP](https://github.com/Mysteriza/ClearOnStart/archive/refs/heads/main.zip).
+1. Go to the ClearOnStart [Releases page](https://github.com/Mysteriza/ClearOnStart/releases).
+2. Download the latest `ClearOnStart.zip` file.
 3. Find the downloaded `.zip` file (usually in your **Downloads** folder).
 4. **Right-click** the file → **Extract All...** → click **Extract**.
 5. A new folder will appear — keep this folder, you'll need it in Step 3.

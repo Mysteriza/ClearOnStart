@@ -61,7 +61,7 @@ function deepMerge(base, override) {
 async function appendLog(entry) {
   const { [LOG_KEY]: log = [] } = await chrome.storage.local.get(LOG_KEY);
   log.unshift({ ...entry, at: Date.now() });
-  await chrome.storage.local.set({ [LOG_KEY]: log.slice(0, 25) });
+  await chrome.storage.local.set({ [LOG_KEY]: log.slice(0, 30) });
 }
 
 function buildRemovalOptions(targets) {

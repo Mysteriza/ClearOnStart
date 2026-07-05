@@ -19,6 +19,8 @@ const TRIGGER_LABELS = {
 
 let state = null;
 let dirty = false;
+const ITEMS_PER_PAGE = 10;
+let currentPage = 0;
 
 function fmtTime(ts) {
   if (!ts) return "—";
@@ -104,10 +106,16 @@ function renderLog(log) {
     empty.className = "log__row--empty";
     empty.textContent = "No activity yet — the manifest is armed but unused.";
     table.appendChild(empty);
+    $("log-pagination").hidden = true;
     return;
   }
 
-  for (const entry of log) {
+  const totalPages = Math.ceil(log.length / ITEMS_PER_PAGE);
+  if (currentPage >= totalPages) currentPage = totalPages - 1;
+  const start = currentPage * ITEMS_PER_PAGE;
+  const slice = log.slice(start, start + ITEMS_PER_PAGE);
+
+  for (const entry of slice) {
     const row = document.createElement("div");
     row.className = "log__row";
     row.setAttribute("role", "row");
@@ -136,6 +144,16 @@ function renderLog(log) {
     row.append(when, trig, status);
     table.appendChild(row);
   }
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const pagination = $("log-pagination");
+  pagination.hidden = false;
+  $("log-page-info").textContent = `Page ${currentPage + 1} of ${totalPages}`;
+  $("log-prev").disabled = currentPage === 0;
+  $("log-next").disabled = currentPage >= totalPages - 1;
 }
 
 function escapeHtml(s) {
@@ -214,6 +232,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  $("log-prev").addEventListener("click", () => {
+    if (currentPage > 0) { currentPage--; fetchAndRenderLog(); }
+  });
+  $("log-next").addEventListener("click", () => {
+    currentPage++; fetchAndRenderLog();
+  });
+
+  async function fetchAndRenderLog() {
+    const r = await chrome.runtime.sendMessage({ type: "cos:get-log" });
+    renderLog(r?.log || []);
+  }
+
   $("save-btn").addEventListener("click", async () => {
     const next = collectFromDom();
     const btn = $("save-btn");
@@ -262,12 +292,14 @@ document.addEventListener("DOMContentLoaded", () => {
   $("clear-log").addEventListener("click", async () => {
     if (!confirm("Clear all activity log? This cannot be undone.")) return;
     await chrome.runtime.sendMessage({ type: "cos:clear-log" });
+    currentPage = 0;
     renderLog([]);
     flash("Log cleared.", "ok");
   });
 
   chrome.runtime.onMessage.addListener(async (msg) => {
     if (msg?.type === "cos:cleared") {
+      currentPage = 0;
       const logRes = await chrome.runtime.sendMessage({ type: "cos:get-log" });
       renderLog(logRes?.log || []);
     }
