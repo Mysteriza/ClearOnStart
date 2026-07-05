@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ClearOnStart",
   "short_name": "ClearOnStart",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Wipe browsing history, cached images, download records, and autofill form data the moment Chrome opens.",
   "minimum_chrome_version": "108",
   "permissions": [
